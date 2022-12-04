@@ -6,7 +6,7 @@ Copyright (C) 2022 Matt Woodhead
 
 from collections import namedtuple
 
-#__package__ = "can_sontheim"
+# __package__ = "can_sontheim"
 
 single_channel = namedtuple("single_channel", ["CAN1"])
 dual_channel = namedtuple("dual_channel", ["CAN1", "CAN2"])

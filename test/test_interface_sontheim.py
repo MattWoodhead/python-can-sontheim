@@ -15,7 +15,7 @@ from can.interfaces.sontheim import SontheimBus
 
 
 class TestSontheimBus(unittest.TestCase):
-    """ unit tests for the sontheim bus """
+    """unit tests for the sontheim bus"""
 
     def setUp(self) -> None:
         self.bus = None
