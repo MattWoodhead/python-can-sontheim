@@ -315,16 +315,16 @@ class SontheimBus(BusABC):
         msg_struct = CANMsgStruct()
 
         # configure the message. ID, Data length, ID type, message type
-        msg_l_id = c_long(msg.arbitration_id)
-        msg_by_len = msg.dlc
+        msg_struct.l_id = c_long(msg.arbitration_id)
+        msg_struct.by_len = msg.dlc
         if msg.is_extended_id:
-            msg_by_extended = c_ubyte(2)  # 00000010
+            msg_struct.by_extended = c_ubyte(2)  # 00000010
         else:
-            msg_by_extended = c_ubyte(1)  # 00000001
+            msg_struct.by_extended = c_ubyte(1)  # 00000001
         if msg.is_remote_frame:
-            msg_by_remote = c_ubyte(1)  # 00000001
+            msg_struct.by_remote = c_ubyte(1)  # 00000001
         else:
-            msg_by_remote = c_ubyte(0)  # 00000000
+            msg_struct.by_remote = c_ubyte(0)  # 00000000
 
         # copy data
         for i in range(msg.dlc):
