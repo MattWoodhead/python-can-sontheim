@@ -1,0 +1,6 @@
+include *.txt
+include test/*.py
+include test/data/*.*
+recursive-include doc *.rst
+recursive-include can_sontheim *.pdf
+recursive-include can_sontheim *.url

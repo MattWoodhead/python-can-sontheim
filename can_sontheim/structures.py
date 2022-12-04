@@ -24,7 +24,7 @@ from ctypes import (
 from ctypes import Structure
 
 
-#__package__ = "can_sontheim"
+# __package__ = "can_sontheim"
 
 
 MAX_NUM_APIHANDLE = 4

@@ -10,12 +10,12 @@ from unittest.mock import Mock
 import can
 from can.bus import BusState
 from can.exceptions import CanOperationError, CanInitializationError, CanTimeoutError
-import can.interfaces.sontheim.constants as const
-from can.interfaces.sontheim import SontheimBus
+import can_sontheim.constants as const
+from can_sontheim import SontheimBus
 
 
 class TestSontheimBus(unittest.TestCase):
-    """ unit tests for the sontheim bus """
+    """unit tests for the sontheim bus"""
 
     def setUp(self) -> None:
         self.bus = None
