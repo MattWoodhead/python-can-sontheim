@@ -1,0 +1,6 @@
+include *.txt
+include *.pdf
+include *.lnk
+include test/*.py
+include test/data/*.*
+recursive-include doc *.rst
