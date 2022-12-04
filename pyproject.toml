@@ -1,0 +1,108 @@
+[project]
+name = "python-can-sontheim"
+version = "0.1.0"
+description = "A python-can interface driver for Sontheim Industrie Elektronik CAN bus interfaces"
+readme = "README.rst"
+license = {file = "LICENSE.txt"}
+requires-python = ">=3.7"
+authors = [
+    { name = "Matt Woodhead", email = "woody.w62@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Manufacturing",
+    "Environment :: Plugins",
+]
+keywords = ["CANbus", "Sontheim", "python-can", "CANfox"]
+
+dependencies = [
+    "python-can",
+]
+
+[project.optional-dependencies]
+dev = [
+    "windows-curses",
+    "parameterized",
+    "pytest",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.entry-points."can.interface"]
+sontheim = "can_sontheim.canlib:SontheimBus"
+
+[project.urls]
+homepage = "https://github.com/MattWoodhead/python-can-sontheim"
+documentation = "https://github.com/MattWoodhead/python-can-sontheim"
+repository = "https://github.com/MattWoodhead/python-can-sontheim"
+
+[tool.black]
+line-length = 120
+target_version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+  | foo.py           # also separately exclude a file named foo.py in
+                     # the root of the project
+)
+'''
+
+# [tool.setuptools]
+# # If there are data files included in your packages that need to be
+# # installed, specify them here.
+# package-data = {"sample" = ["*.dat"]}
+# TODO - investigate if we can package the MTAPI driver with the module
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py37, py38, py39, py310
+
+isolated_build = true
+
+[gh-actions]
+python =
+    3.7: py37
+    3.8: py38
+    3.9: py39
+    3.10: py310, mypy
+
+[testenv]
+deps =
+    check-manifest >= 0.42
+    # If your project uses README.rst, uncomment the following:
+    readme_renderer
+    flake8
+    pytest
+    build
+    twine
+commands =
+    check-manifest --ignore 'tox.ini,tests/**'
+    python -m build
+    python -m twine check dist/*
+    flake8 .
+    py.test tests {posargs}
+
+[flake8]
+exclude = .tox,*.egg,build,data
+select = E,W,F
+"""
