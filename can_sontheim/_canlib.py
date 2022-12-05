@@ -31,9 +31,6 @@ from .devices import CANfox, CANUSB, CANUSB_Legacy
 from .structures import CANMsgStruct, CANMsgBuffer, CANInstalledDevicesStruct, read_struct_as_dict
 
 
-# __package__ = "can_sontheim"
-
-
 try:
     # Try builtin Python 3 Windows API
     from _overlapped import CreateEvent

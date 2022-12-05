@@ -1,15 +1,15 @@
 [project]
 name = "python-can-sontheim"
-version = "0.1.0"
+version = "0.1.1"
 description = "A python-can interface driver for Sontheim Industrie Elektronik CAN bus interfaces"
 readme = "README.rst"
-license = {file = "LICENSE.txt"}
+license = { text = "GNU Lesser General Public License v3 (LGPLv3)" }
 requires-python = ">=3.7"
 authors = [
     { name = "Matt Woodhead", email = "woody.w62@gmail.com" }
 ]
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python :: 3",
@@ -37,6 +37,7 @@ build-backend = "setuptools.build_meta"
 
 [project.entry-points."can.interface"]
 sontheim = "can_sontheim.canlib:SontheimBus"
+CANfox = "can_sontheim.canlib:SontheimBus"
 
 [project.urls]
 homepage = "https://github.com/MattWoodhead/python-can-sontheim"
@@ -91,7 +92,6 @@ deps =
     check-manifest >= 0.42
     # If your project uses README.rst, uncomment the following:
     readme_renderer
-    flake8
     pytest
     build
     twine
@@ -99,10 +99,6 @@ commands =
     check-manifest --ignore 'tox.ini,tests/**'
     python -m build
     python -m twine check dist/*
-    flake8 .
-    py.test tests {posargs}
 
-[flake8]
-exclude = .tox,*.egg,build,data
-select = E,W,F
 """
+#   py.test tests {posargs}
