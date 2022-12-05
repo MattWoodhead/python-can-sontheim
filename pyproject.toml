@@ -36,8 +36,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project.entry-points."can.interface"]
-sontheim = "can_sontheim.canlib:SontheimBus"
-CANfox = "can_sontheim.canlib:SontheimBus"
+sontheim = "can_sontheim._canlib:SontheimBus"
+CANfox = "can_sontheim._canlib:SontheimBus"
 
 [project.urls]
 homepage = "https://github.com/MattWoodhead/python-can-sontheim"
