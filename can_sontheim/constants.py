@@ -32,9 +32,6 @@ from .structures import (
 )
 
 
-# __package__ = "can_sontheim"
-
-
 IS_PYTHON_64BIT = sys.maxsize > 2**32
 
 

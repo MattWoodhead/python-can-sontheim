@@ -11,12 +11,12 @@ from time import sleep
 from pprint import pprint
 
 import can
-from can_sontheim import devices, canlib
+from can_sontheim import devices, _canlib
 
 
 def main() -> None:
 
-    print(canlib.HAS_EVENTS)
+    print(f"System has events: {_canlib.HAS_EVENTS}")
 
     with can.Bus(interface="sontheim", channel=devices.CANfox.CAN1, bitrate=250000, echo=False) as bus:
         try:

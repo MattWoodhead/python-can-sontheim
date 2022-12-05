@@ -8,4 +8,4 @@ python-can-sontheim
 """
 
 from .version import __version__
-from .canlib import SontheimBus
+from ._canlib import SontheimBus
