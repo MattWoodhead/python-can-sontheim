@@ -3,13 +3,13 @@ name = "python-can-sontheim"
 version = "0.1.0"
 description = "A python-can interface driver for Sontheim Industrie Elektronik CAN bus interfaces"
 readme = "README.rst"
-license = {file = "LICENSE.txt"}
+license = "GNU Lesser General Public License v3 (LGPLv3)"
 requires-python = ">=3.7"
 authors = [
     { name = "Matt Woodhead", email = "woody.w62@gmail.com" }
 ]
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python :: 3",
