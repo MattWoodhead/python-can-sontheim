@@ -29,18 +29,20 @@ Install using pip::
 Usage
 -----
 
-TODO
+In general, useage is largely the same as with the main python-can_ library, using the interface designation of "sontheim". When integrating the sontheim interface into scripts, it is possible to import constants, device deisgnations etc from the python-can-sontheim module using "import can_sontheim". For the majority of the use cases, using an SIE interface is as simple as amending any python-can examples with the lines shown below:
 
-
-Create python-can bus:
+Create python-can bus with the SIE CANfox USB interface:
 
 .. code-block:: python
 
-    import python-can
-    
-    # todo
+    import can
+    from can_sontheim import devices
 
+    bus = can.Bus(interface="sontheim", channel=devices.CANfox.CAN1, bitrate=250000, echo=False)
 
+Some examples are present in the python-can-sontheim/examples_ directory in the repository, and more complete documentation specific to the SIE interfaces and driver will be uploaded to this module in due course.
 
 
 .. _python-can: https://python-can.readthedocs.org/en/stable/
+
+.. _examples: https://github.com/MattWoodhead/python-can-sontheim/tree/main/examples
