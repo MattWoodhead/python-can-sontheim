@@ -37,6 +37,7 @@ build-backend = "setuptools.build_meta"
 
 [project.entry-points."can.interface"]
 sontheim = "can_sontheim.canlib:SontheimBus"
+CANfox = "can_sontheim.canlib:SontheimBus"
 
 [project.urls]
 homepage = "https://github.com/MattWoodhead/python-can-sontheim"
