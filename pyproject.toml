@@ -99,9 +99,6 @@ commands =
     check-manifest --ignore 'tox.ini,tests/**'
     python -m build
     python -m twine check dist/*
-    py.test tests {posargs}
 
-[flake8]
-exclude = .tox,*.egg,build,data
-select = E,W,F
 """
+#   py.test tests {posargs}
