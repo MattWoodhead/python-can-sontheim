@@ -1,7 +1,6 @@
 name: Run package tests with tox
 
 on:
-  - push
   - pull_request
 
 jobs:
