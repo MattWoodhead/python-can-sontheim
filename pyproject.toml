@@ -1,6 +1,6 @@
 [project]
 name = "python-can-sontheim"
-version = "0.1.0"
+version = "0.1.1"
 description = "A python-can interface driver for Sontheim Industrie Elektronik CAN bus interfaces"
 readme = "README.rst"
 license = { text = "GNU Lesser General Public License v3 (LGPLv3)" }
