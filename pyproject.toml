@@ -92,7 +92,6 @@ deps =
     check-manifest >= 0.42
     # If your project uses README.rst, uncomment the following:
     readme_renderer
-    flake8
     pytest
     build
     twine
@@ -100,7 +99,6 @@ commands =
     check-manifest --ignore 'tox.ini,tests/**'
     python -m build
     python -m twine check dist/*
-    flake8 .
     py.test tests {posargs}
 
 [flake8]
