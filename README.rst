@@ -1,8 +1,8 @@
 python-can-sontheim
-===================================================================================
-|release| |python_implementation| |downloads|
+====================
+|release| |python_implementation| |coverage| |downloads|
 
-.. |release| image:: https://img.shields.io/pypi/v/python-can-sontheim.svg)
+.. |release| image:: https://img.shields.io/pypi/v/python-can-sontheim.svg
    :target: https://pypi.python.org/pypi/python-can-sontheim/
    :alt: Latest Version on PyPi
 
@@ -13,6 +13,9 @@ python-can-sontheim
 .. |downloads| image:: https://pepy.tech/badge/python-can-sontheim
    :target: https://pepy.tech/project/python-can-sontheim
    :alt: Downloads on PePy
+   
+.. |coverage| image:: https://coveralls.io/repos/github/MattWoodhead/python-can-sontheim/badge.svg?branch=main
+   :target: https://coveralls.io/github/MattWoodhead/python-can-sontheim?branch=main
 
 
 This module is a plugin for the python-can_. module, that allows the use of CAN interfaces that rely on the Sontheim Industrie Elektronik (SIE) MTAPI drivers (windows only). These include the SIE CANfox (including rebranded versions such as that by IFM), SIE CANUSB, etc.
