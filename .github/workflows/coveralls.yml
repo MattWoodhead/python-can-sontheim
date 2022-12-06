@@ -37,7 +37,7 @@ jobs:
         pip install python-can tox tox-gh-actions pytest
     - name: Test with pytest via tox
       run: |
-        tox -e
+        tox
     - name: Coveralls Parallel
       uses: coverallsapp/github-action@master
       with:
