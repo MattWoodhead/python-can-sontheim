@@ -147,7 +147,7 @@ class SontheimBus(BusABC):
         # TODO: Check DLL status for DLL version - if it shows a value of zero, you need to unplug the adapter and plug it back in again to reset the driver
 
         error_code = _CANLIB.canOpen(
-            c_long(self.channel),
+            c_long(int(self.channel)),
             c_long(errors),
             c_long(echo),
             c_long(tx_timeout),
