@@ -1,4 +1,4 @@
-name: Run package tests with tox
+name: Tox CI
 
 on:
   - pull_request
@@ -8,12 +8,12 @@ env:
   PY_COLORS: "1"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.experimental }}
+  test:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: false
     strategy:
       matrix:
-        experimental: [true]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "pypy3.7", "pypy3.8", "pypy3.9"]
         fail-fast: [false]
     steps:
@@ -28,3 +28,20 @@ jobs:
         python -m pip install tox tox-gh-actions python-can
     - name: Test with tox
       run: tox
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.coveralls_github_token }}
+        flag-name: Unittests-${{ matrix.os }}-${{ matrix.python-version }}
+        parallel: true
+        path-to-lcov: ./coverage.lcov
+
+  coveralls:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.coveralls_github_token }}
+        parallel-finished: true
