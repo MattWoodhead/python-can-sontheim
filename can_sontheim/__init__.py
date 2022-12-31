@@ -9,3 +9,4 @@ python-can-sontheim
 
 from .version import __version__
 from ._canlib import SontheimBus
+from .constants import IS_PYTHON_64BIT

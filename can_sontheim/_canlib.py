@@ -4,7 +4,7 @@ Ctypes wrapper module for the SIE / IFM CANfox interface
 Copyright (C) 2022 Matt Woodhead
 """
 # standard library imports
-from ctypes import c_int, c_long, c_ubyte, c_ulonglong, byref, Structure
+from ctypes import c_int, c_long, c_ubyte, c_ulonglong, byref
 import logging
 import time
 import platform
@@ -13,7 +13,7 @@ import sys
 # imports from the python-can module
 from can.message import Message
 from can.bus import BusABC, BusState
-from can.exceptions import CanOperationError, CanInitializationError, CanTimeoutError
+from can.exceptions import CanOperationError, CanInitializationError, CanTimeoutError, CanInterfaceNotImplementedError
 from can.ctypesutil import CLibrary, HANDLE
 
 # from can.util import len2dlc, dlc2len
@@ -57,8 +57,8 @@ if sys.platform in ["win32", "cygwin"]:
         try:  # Check that python-can is being run on a 32 bit python interpreter
             assert not IS_PYTHON_64BIT
         except AssertionError as AE:
-            raise AssertionError(
-                "The Sontheim API is currently only compatible with the 32 bit python interpreter",
+            raise CanInterfaceNotImplementedError(
+                "The Sontheim API is currently only on 32 bit python interpreters"
             ) from AE
             # The SIE MT_API DLL is 32 bit only, so cannot be run from a 64 bit process
             # TODO: develop a 64 bit wrapper for the 32 bit API similar to msl-loadlib.
@@ -158,19 +158,22 @@ class SontheimBus(BusABC):
             byref(self._Handle),
         )
         if error_code != NTCAN_SUCCESS:
+            # raise CanInitializationError(
+            #     "Error encountered whilst trying to open Sontheim bus interface, [Error Code: %s]" % error_code,
+            # )
             raise CanInitializationError(
-                "Error encountered whilst trying to open Sontheim bus interface, [Error Code: %s]" % error_code,
+                f"Error encountered whilst trying to open Sontheim bus interface, [Error Code: {error_code}]",
             )
 
         error_code = _CANLIB.canSetBaudrate(self._Handle, c_int(self._canfox_bitrate))
         if error_code != NTCAN_SUCCESS:
             raise CanInitializationError(
-                "Error encountered whilst trying to set bus bitrate, [Error Code: %s]" % error_code,
+                f"Error encountered whilst trying to set bus bitrate, [Error Code: {error_code}]",
             )
         error_code = _CANLIB.canSetFilterMode(self._Handle, c_int(4))
         if error_code != NTCAN_SUCCESS:
             raise CanInitializationError(
-                "Error encountered whilst trying to set bus filters, [Error Code: %s]" % error_code,
+                f"Error encountered whilst trying to set bus filters, [Error Code: {error_code}]",
             )
 
         self._bus_pc_start_time_s = round(time.time(), 4)
@@ -233,7 +236,7 @@ class SontheimBus(BusABC):
                     time.sleep(0.001)
             elif error_code != NTCAN_SUCCESS:
                 raise CanOperationError(
-                    "Error encountered whilst trying to read bus, [Error Code: %s]" % error_code,
+                    "Error encountered whilst trying to read bus, [Error Code: {error_code}]",
                 )
 
         log.debug("Received a message")
@@ -272,7 +275,7 @@ class SontheimBus(BusABC):
             error_code = _CANLIB.canReadNoWait(self._Handle, byref(msg_buffer), byref(msg_return_count))
             if error_code != NTCAN_SUCCESS:
                 raise CanOperationError(
-                    "Error encountered whilst trying to read bus, [Error Code: %s]" % error_code,
+                    "Error encountered whilst trying to read bus, [Error Code: {error_code}]",
                 )
 
         log.debug("Received %s message(s)", msg_return_count)
@@ -334,7 +337,7 @@ class SontheimBus(BusABC):
             raise CanTimeoutError("Timeout whilst attempting to send message")
         if error_code != NTCAN_SUCCESS:
             raise CanOperationError(
-                "Error encountered whilst trying to write to bus, [Error Code: %s]" % error_code,
+                "Error encountered whilst trying to write to bus, [Error Code: {error_code}]",
             )
 
     def flush_tx_buffer(self):
@@ -371,7 +374,7 @@ class SontheimBus(BusABC):
             raise CanTimeoutError("Timeout whilst attempting to flush TX buffer")
         if error_code != NTCAN_SUCCESS:
             raise CanOperationError(
-                "Error encountered whilst trying to flush TX buffer, [Error Code: %s]" % error_code,
+                "Error encountered whilst trying to flush TX buffer, [Error Code: {error_code}]",
             )
 
     def canBlinkLED(self, blink_length_s=2):
@@ -389,14 +392,18 @@ class SontheimBus(BusABC):
         error_code = _CANLIB.canBlinkLED(self._Handle, 0, i % 2, 5)
         if error_code != NTCAN_SUCCESS:
             raise CanOperationError(
-                "Error encountered whilst trying to flash adpter LEDs, [Error Code: %s]" % error_code,
+                "Error encountered whilst trying to flash adpter LEDs, [Error Code: {error_code}]",
             )
 
     def clear_rx_buffer(self):
+        """
+        Clears the receive buffer in the attached CAN peripheral
+        :raises CanOperationError: If an error was encountered trying to clear the buffer
+        """
         error_code = _CANLIB.canClearBuffer(self._Handle)
         if error_code != NTCAN_SUCCESS:
             raise CanOperationError(
-                "Error encountered whilst trying to clear the RX buffer, [Error Code: %s]" % error_code,
+                "Error encountered whilst trying to clear the RX buffer, [Error Code: {error_code}]",
             )
 
     @staticmethod
