@@ -14,17 +14,8 @@ jobs:
     strategy:
       matrix:
         experimental: [true]
-        python-version: [
-          "3.7",
-          "3.8",
-          "3.9",
-          "3.10",
-          "3.11",
-          "pypy-3.7",
-          "pypy-3.8",
-          "pypy-3.9",
-          ]
-        fail-fast: false
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "pypy3.7", "pypy3.8", "pypy3.9"]
+        fail-fast: [false]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
