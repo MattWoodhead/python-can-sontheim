@@ -401,14 +401,18 @@ class SontheimBus(BusABC):
 
     @staticmethod
     def _detect_available_configs():
-
-        devices_struct = CANInstalledDevicesStruct()
-        error_code = _CANLIB.canGetDeviceList(byref(devices_struct))
-        if error_code == NTCAN_SUCCESS:
-            _devices = read_struct_as_dict(devices_struct)
-            if _devices:
-                return [{"interface": "sontheim", "channel": _devices["Net"]}]
-        return []
+        try:
+            devices_struct = CANInstalledDevicesStruct()
+            error_code = _CANLIB.canGetDeviceList(byref(devices_struct))
+            if error_code == NTCAN_SUCCESS:
+                _devices = read_struct_as_dict(devices_struct)
+                if _devices:
+                    return [{"interface": "sontheim", "channel": _devices["Net"]}]
+            return []
+        except AttributeError:
+            # An AttributeError is raised when run on a 64 bit system even though the bus is not avalable
+            # return an empty list to prevent issues with python-can detect_available_configs function
+            return []
 
     def fileno(self) -> int:
         raise NotImplementedError("fileno is not implemented in the Sontheim CAN bus interfaces")
